@@ -1,33 +1,40 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
-int main(int args, char *argv[])
+#include "ddsfile.h"
+
+int main(int argc, char *argv[])
 {
     std::cout << "ddsviewer" << std::endl;
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
-    sf::Event event;
-
-    while (window.isOpen())
+    if(argc > 1)
     {
-        while (window.pollEvent(event))
-        {
-            switch(event.type)
-            {
-                case sf::Event::Closed:
-                {
-                    window.close();
-                }
-                break;
+        DdsFile ddsFile(argv[1]);
 
-                case sf::Event::KeyPressed:
+        sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
+        sf::Event event;
+
+        while (window.isOpen())
+        {
+            while (window.pollEvent(event))
+            {
+                switch(event.type)
                 {
-                    if(event.key.code == sf::Keyboard::Key::Escape)
+                    case sf::Event::Closed:
                     {
                         window.close();
                     }
+                    break;
+
+                    case sf::Event::KeyPressed:
+                    {
+                        if(event.key.code == sf::Keyboard::Key::Escape)
+                        {
+                            window.close();
+                        }
+                    }
+                    break;
                 }
-                break;
             }
         }
     }
