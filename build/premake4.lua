@@ -5,6 +5,7 @@ solution "ddsviewer"
         kind "ConsoleApp"
         language "C++"
         files { "../src/**.h", "../src/**.cpp" }
+        links { "sfml-graphics", "sfml-window", "sfml-system" }
 
         configuration "Debug"
             defines { "DEBUG" }
