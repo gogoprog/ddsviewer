@@ -7,8 +7,8 @@
 class DdsLoader
 {
 public:
-    DdsLoader() = default;
-    ~DdsLoader() = default;
+    DdsLoader() = delete;
+    ~DdsLoader() = delete;
 
-    std::unique_ptr<DdsFile> load(const std::string & filePath) const;
+    static std::unique_ptr<DdsFile> load(const std::string & filePath);
 };

@@ -9,9 +9,7 @@ int main(int argc, char *argv[])
 
     if(argc > 1)
     {
-        DdsLoader loader;
-
-        auto ddsFile = loader.load(argv[1]);
+        auto ddsFile = DdsLoader::load(argv[1]);
 
         if(ddsFile)
         {
