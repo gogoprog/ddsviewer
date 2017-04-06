@@ -1,5 +1,6 @@
 #include "ddsloader.h"
 #include "ddsfile.h"
+#include "decompressor.h"
 
 #include <iostream>
 #include <string>
@@ -9,18 +10,19 @@ using dword = unsigned int;
 
 const dword DDS_MAGIC = 0x20534444;
 const dword DDPF_FOURCC = 0x4;
+const dword DDPF_RGB = 0x40;
 
-constexpr dword fourCcToInt32(const char *value)
+constexpr dword fourCcToDword(const char *value)
 {
     return value[0] + (value[1] << 8) + (value[2] << 16) + (value[3] << 24);
 }
 
-constexpr dword DXT1 = fourCcToInt32("DXT1");
-constexpr dword DXT2 = fourCcToInt32("DXT2");
-constexpr dword DXT3 = fourCcToInt32("DXT3");
-constexpr dword DXT4 = fourCcToInt32("DXT4");
-constexpr dword DXT5 = fourCcToInt32("DXT5");
-constexpr dword DX10 = fourCcToInt32("DX10");
+constexpr dword DXT1 = fourCcToDword("DXT1");
+constexpr dword DXT2 = fourCcToDword("DXT2");
+constexpr dword DXT3 = fourCcToDword("DXT3");
+constexpr dword DXT4 = fourCcToDword("DXT4");
+constexpr dword DXT5 = fourCcToDword("DXT5");
+constexpr dword DX10 = fourCcToDword("DX10");
 
 struct DdsPixelFormat {
     dword dwSize;
@@ -86,10 +88,27 @@ std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath)
 
         read(file, header);
 
-        if((header.ddspf.dwFlags & DDPF_FOURCC) && header.ddspf.dwFourCC == DX10)
+        std::cout << "Dimensions: " << header.dwWidth << "x" << header.dwHeight << std::endl;
+        std::cout << "Mipmap count:" << header.dwMipMapCount << std::endl;
+
+        if(header.ddspf.dwFlags & DDPF_FOURCC) 
         {
-            DdsHeaderDxt10 headerDxt10;
-            read(file, headerDxt10);
+            switch(header.ddspf.dwFourCC)
+            {
+                case DXT1:
+                {
+
+                }
+                break;
+
+                case DX10:
+                {
+                    DdsHeaderDxt10 headerDxt10;
+                    read(file, headerDxt10);
+                    std::cout << "DX10" << std::endl;
+                }
+                break;
+            }
         }
 
         return result;
