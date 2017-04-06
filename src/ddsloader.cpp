@@ -5,16 +5,15 @@
 #include <string>
 #include <fstream>
 
-const DdsFile & DdsLoader::load(const std::string & filePath) const
+std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath) const
 {
-    DdsFile *result = new DdsFile(filePath);
-
-    std::ifstream file(filePath);
+    std::ifstream file{filePath};
 
     if(file.is_open())
     {
-        std::cout << "file opened!" << std::endl;
+        auto result = std::unique_ptr<DdsFile>(new DdsFile{filePath});
+        return result;
     }
 
-    return *result;
+    return nullptr;
 }

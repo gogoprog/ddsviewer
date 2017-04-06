@@ -13,29 +13,32 @@ int main(int argc, char *argv[])
 
         auto ddsFile = loader.load(argv[1]);
 
-        sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
-        sf::Event event;
-
-        while (window.isOpen())
+        if(ddsFile)
         {
-            while (window.pollEvent(event))
-            {
-                switch(event.type)
-                {
-                    case sf::Event::Closed:
-                    {
-                        window.close();
-                    }
-                    break;
+            sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
+            sf::Event event;
 
-                    case sf::Event::KeyPressed:
+            while (window.isOpen())
+            {
+                while (window.pollEvent(event))
+                {
+                    switch(event.type)
                     {
-                        if(event.key.code == sf::Keyboard::Key::Escape)
+                        case sf::Event::Closed:
                         {
                             window.close();
                         }
+                        break;
+
+                        case sf::Event::KeyPressed:
+                        {
+                            if(event.key.code == sf::Keyboard::Key::Escape)
+                            {
+                                window.close();
+                            }
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

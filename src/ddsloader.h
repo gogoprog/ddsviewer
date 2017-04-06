@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include "ddsfile.h"
 
 class DdsLoader
@@ -9,5 +10,5 @@ public:
     DdsLoader() = default;
     ~DdsLoader() = default;
 
-    const DdsFile & load(const std::string & filePath) const;
+    std::unique_ptr<DdsFile> load(const std::string & filePath) const;
 };
