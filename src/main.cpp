@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "ddsfile.h"
+#include "ddsloader.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +9,9 @@ int main(int argc, char *argv[])
 
     if(argc > 1)
     {
-        DdsFile ddsFile(argv[1]);
+        DdsLoader loader;
+
+        auto ddsFile = loader.load(argv[1]);
 
         sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
         sf::Event event;

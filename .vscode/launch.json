@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/build/ddsviewer",
-            "args": [],
+            "args": ["res/sample.dds"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],

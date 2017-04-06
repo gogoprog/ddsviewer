@@ -1,30 +1,26 @@
 #pragma once
 
 #include <string>
-#include <fstream>
+#include <vector>
 
 class DdsFile
 {
+    friend class DdsLoader;
+
 public:
-    DdsFile(const std::string & filePath)
-    :
-    itHasSucceeded(false)
+    DdsFile(const std::string & _filePath)
+        :
+        itHasSucceeded(false),
+        filePath(_filePath)
     {
-        std::ifstream file(filePath);
-
-        if(file.is_open())
-        {
-            std::cout << "file opened!" << std::endl;
-        }
     }
 
-    ~DdsFile()
-    {
-
-    }
+    ~DdsFile() = default;
 
     bool hasSucceeded() const { return itHasSucceeded; }
 
 private:
     bool itHasSucceeded;
+    std::string filePath;
+    std::vector<std::vector<char>> data;
 };
