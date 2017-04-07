@@ -9,11 +9,15 @@ int main(int argc, char *argv[])
 
     if(argc > 1)
     {
+        sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
+
         auto ddsFile = DdsLoader::load(argv[1]);
 
         if(ddsFile)
         {
-            sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
+            sf::Sprite sprite;
+            sprite.setTexture(ddsFile->getTexture());
+
             sf::Event event;
 
             while (window.isOpen())
@@ -36,8 +40,15 @@ int main(int argc, char *argv[])
                             }
                         }
                         break;
+
+                        default:
+                        break;
                     }
                 }
+
+                window.clear();
+                window.draw(sprite);
+                window.display();
             }
         }
     }

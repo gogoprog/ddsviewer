@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <SFML/Graphics/Texture.hpp>
 
 class DdsFile
 {
@@ -16,7 +17,9 @@ public:
 
     ~DdsFile() = default;
 
+    const sf::Texture & getTexture() const { return texture; }
+
 private:
     std::string filePath;
-    std::vector<std::vector<char>> data;
+    sf::Texture texture;
 };
