@@ -16,9 +16,9 @@ int main(int argc, char *argv[])
         if(ddsFile)
         {
             sf::Sprite sprite;
-            sprite.setTexture(ddsFile->getTexture());
-
             sf::Event event;
+
+            sprite.setTexture(ddsFile->getTexture());
 
             while (window.isOpen())
             {

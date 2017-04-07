@@ -98,65 +98,39 @@ std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath)
 
         if(header.ddspf.dwFlags & DDPF_FOURCC) 
         {
+            int blocSize;
+            GLenum glFormat;
+
             switch(header.ddspf.dwFourCC)
             {
                 case DXT1:
                 {
-                    int totalSize = std::max(1, ( (width + 3) / 4 ) ) * std::max(1, ( (height + 3) / 4 ) ) * 8;
-                    std::cout << totalSize << std::endl;
+                    blocSize = 8;
                 }
                 break;
 
                 case DXT2:
                 {
-                    int totalSize = std::max(1, ( (width + 3) / 4 ) ) * std::max(1, ( (height + 3) / 4 ) ) * 8;
-                    std::cout << totalSize << std::endl;
+                    blocSize = 16;
                 }
                 break;
 
                 case DXT3:
                 {
-                    int totalSize = std::max(1, ( (width + 3) / 4 ) ) * std::max(1, ( (height + 3) / 4 ) ) * 8;
-                    std::cout << totalSize << std::endl;
+                    blocSize = 16;
                 }
                 break;
 
                 case DXT4:
                 {
-                    int totalSize = std::max(1, ( (width + 3) / 4 ) ) * std::max(1, ( (height + 3) / 4 ) ) * 8;
-                    std::cout << totalSize << std::endl;
+                    blocSize = 16;
                 }
                 break;
 
                 case DXT5:
                 {
-                    int totalSize = std::max(1, ( (width + 3) / 4 ) ) * std::max(1, ( (height + 3) / 4 ) ) * 16;
-                    std::cout << totalSize << std::endl;
-
-                    data.resize(totalSize);
-
-                    file.read(&data[0], totalSize);
-
-                    sf::Texture::bind(&result->texture);
-
-                    glCompressedTexImage2D(
-                        GL_TEXTURE_2D,
-                        0,
-                        GL_COMPRESSED_RGBA_S3TC_DXT5_EXT,
-                        width,
-                        height,
-                        0,
-                        totalSize,
-                        &data[0]
-                        );
-
-                    GLenum error = glGetError();
-
-                    if (error) 
-                    {
-                        std::cout << std::hex << "Error: " << error << std::endl;
-                        return nullptr;
-                    }
+                    blocSize = 16;
+                    glFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
                 }
                 break;
 
@@ -167,6 +141,35 @@ std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath)
                     std::cout << "DX10" << std::endl;
                 }
                 break;
+            }
+
+            int totalSize = std::max(1, ( (width + 3) / 4 ) ) * std::max(1, ( (height + 3) / 4 ) ) * blocSize;
+
+            data.resize(totalSize);
+
+            file.read(&data[0], totalSize);
+
+            result->texture.create(width, height);
+
+            sf::Texture::bind(&result->texture);
+
+            glCompressedTexImage2D(
+                GL_TEXTURE_2D,
+                0,
+                glFormat,
+                width,
+                height,
+                0,
+                totalSize,
+                &data[0]
+                );
+
+            GLenum error = glGetError();
+
+            if (error) 
+            {
+                std::cout << std::hex << "Error: " << error << std::endl;
+                return nullptr;
             }
         }
 
