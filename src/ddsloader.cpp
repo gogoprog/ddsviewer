@@ -106,6 +106,7 @@ std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath)
                 case DXT1:
                 {
                     blocSize = 8;
+                    glFormat = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
                 }
                 break;
 
@@ -118,6 +119,7 @@ std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath)
                 case DXT3:
                 {
                     blocSize = 16;
+                    glFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
                 }
                 break;
 
