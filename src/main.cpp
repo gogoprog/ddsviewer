@@ -34,9 +34,29 @@ int main(int argc, char *argv[])
 
                         case sf::Event::KeyPressed:
                         {
-                            if(event.key.code == sf::Keyboard::Key::Escape)
+                            switch(event.key.code)
                             {
-                                window.close();
+                                case sf::Keyboard::Key::Escape:
+                                {
+                                    window.close();
+                                }
+                                break;
+
+                                default:
+                                break;
+                            }
+                        }
+                        break;
+
+                        case sf::Event::MouseWheelScrolled:
+                        {
+                            if(event.mouseWheelScroll.delta > 0)
+                            {
+                                sprite.setScale(sprite.getScale() * 1.1f);
+                            }
+                            else
+                            {
+                                sprite.setScale(sprite.getScale() / 1.1f);
                             }
                         }
                         break;
