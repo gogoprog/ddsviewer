@@ -25,7 +25,8 @@ constexpr dword DXT4 = fourCcToDword("DXT4");
 constexpr dword DXT5 = fourCcToDword("DXT5");
 constexpr dword DX10 = fourCcToDword("DX10");
 
-struct DdsPixelFormat {
+struct DdsPixelFormat
+{
     dword dwSize;
     dword dwFlags;
     dword dwFourCC;
