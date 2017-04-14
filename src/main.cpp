@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
         if(ddsFile)
         {
             sf::Sprite sprite;
-            Controller controller(window, sprite);
             sprite.setTexture(ddsFile->getTexture());
+            Controller controller(window, sprite);
 
             while (window.isOpen())
             {

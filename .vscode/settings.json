@@ -21,6 +21,10 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "iosfwd": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "cmath": "cpp",
+        "csignal": "cpp",
+        "cstring": "cpp",
+        "cinttypes": "cpp"
     }
 }

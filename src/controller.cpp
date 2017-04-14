@@ -18,6 +18,7 @@ Controller::Controller(sf::RenderWindow & _window, sf::Sprite & _sprite)
     sprite(_sprite),
     _pimpl(new Pimpl())
 {
+    sprite.setOrigin(sf::Vector2f(sprite.getTexture()->getSize()) * 0.5f);
 }
 
 void Controller::process()
@@ -86,6 +87,12 @@ void Controller::process()
 
                     sprite.setPosition(pimpl.spriteStart + delta);
                 }
+            }
+            break;
+
+            case sf::Event::Resized:
+            {
+                window.setView(sf::View(sf::Vector2f(0, 0), sf::Vector2f(event.size.width, event.size.height)));
             }
             break;
 
