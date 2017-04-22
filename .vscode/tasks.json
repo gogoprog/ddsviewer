@@ -4,13 +4,9 @@
     "version": "0.1.0",
     "command": "make",
     "isShellCommand": true,
-    "args": ["-j8"],
     "showOutput": "always",
     "echoCommand": true,
-    "options": {
-        "cwd": "${workspaceRoot}/build"
-    },
-     "problemMatcher": {
+    "problemMatcher": {
         "owner": "cpp",
         "fileLocation": ["relative", "${workspaceRoot}/build"],
         "pattern": {
@@ -21,5 +17,24 @@
             "severity": 4,
             "message": 5
         }
-    }
+    },
+    "tasks": [
+        {
+            "taskName": "debug",
+            "command": "make",
+            "args": ["-j8"],
+            "isBuildCommand": true,
+            "options":{
+                "cwd": "${workspaceRoot}/build"
+            }
+        },
+        {
+            "taskName": "release",
+            "command": "make",
+            "args": ["config=release", "-j8"],
+            "options":{
+                "cwd": "${workspaceRoot}/build"
+            }
+        }
+    ]
 }

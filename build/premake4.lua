@@ -10,6 +10,7 @@ solution "ddsviewer"
         configuration "Debug"
             defines { "DEBUG" }
             flags { "Symbols" }
+            targetsuffix "d"
 
         configuration "Release"
             defines { "NDEBUG" }
