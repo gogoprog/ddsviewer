@@ -20,12 +20,22 @@ int main(int argc, char *argv[])
             sprite.setTexture(ddsFile->getTexture());
             Controller controller(window, sprite);
 
+            window.setTitle("ddsviewer - " + ddsFile->getFilePath());
+
             while (window.isOpen())
             {
                 controller.process();
             }
+
+            return EXIT_SUCCESS;
         }
+
+        std::cout << "Cannot open file." << std::endl;
+
+        return EXIT_FAILURE;
     }
 
-    return EXIT_SUCCESS;
+    std::cout << "No argument?" << std::endl;
+
+    return EXIT_FAILURE;
 }

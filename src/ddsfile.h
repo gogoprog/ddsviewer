@@ -17,7 +17,8 @@ public:
 
     ~DdsFile() = default;
 
-    const sf::Texture & getTexture() const { return texture; }
+    const auto & getTexture() const { return texture; }
+    const auto & getFilePath() const { return filePath; }
 
 private:
     std::string filePath;
