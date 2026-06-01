@@ -1,10 +1,8 @@
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
-    "version": "0.1.0",
+    "version": "2.0.0",
     "command": "make",
-    "isShellCommand": true,
-    "showOutput": "always",
     "echoCommand": true,
     "problemMatcher": {
         "owner": "cpp",
@@ -20,21 +18,31 @@
     },
     "tasks": [
         {
-            "taskName": "debug",
-            "command": "make",
-            "args": ["-j8"],
-            "isBuildCommand": true,
-            "options":{
+            "label": "debug",
+            "type": "shell",
+            "options": {
                 "cwd": "${workspaceRoot}/build"
+            },
+            "command": "make",
+            "args": [
+                "-j8"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         },
         {
-            "taskName": "release",
-            "command": "make",
-            "args": ["config=release", "-j8"],
-            "options":{
+            "label": "release",
+            "type": "shell",
+            "options": {
                 "cwd": "${workspaceRoot}/build"
-            }
+            },
+            "command": "make",
+            "args": [
+                "config=release",
+                "-j8"
+            ]
         }
     ]
 }

@@ -7,11 +7,11 @@ solution "ddsviewer"
         files { "../src/**.h", "../src/**.cpp" }
         links { "sfml-graphics", "sfml-window", "sfml-system", "GL" }
 
-        configuration "Debug"
+        filter { "configurations:Debug" }
             defines { "DEBUG" }
-            flags { "Symbols" }
+            symbols "On"
             targetsuffix "d"
 
-        configuration "Release"
+        filter { "configurations:Release" }
             defines { "NDEBUG" }
-            flags { "Optimize" }
+            optimize "On"

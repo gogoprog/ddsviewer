@@ -152,7 +152,7 @@ std::unique_ptr<DdsFile> DdsLoader::load(const std::string & filePath)
 
             file.read(&data[0], totalSize);
 
-            result->texture.create(width, height);
+            result->texture.resize(sf::Vector2u(width, height));
 
             sf::Texture::bind(&result->texture);
 

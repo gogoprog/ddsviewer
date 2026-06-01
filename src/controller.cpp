@@ -18,86 +18,58 @@ Controller::Controller(sf::RenderWindow & _window, sf::Sprite & _sprite)
     sprite(_sprite),
     _pimpl(new Pimpl())
 {
-    sprite.setOrigin(sf::Vector2f(sprite.getTexture()->getSize()) * 0.5f);
+    sprite.setOrigin(sf::Vector2f(sprite.getTexture().getSize()) * 0.5f);
 }
 
 void Controller::process()
 {
     auto & pimpl = *_pimpl;
-    sf::Event event;
 
-    while (window.pollEvent(event))
+    while (const std::optional event = window.pollEvent())
     {
-        switch(event.type)
+        if (event->is<sf::Event::Closed>())
         {
-            case sf::Event::Closed:
+            window.close();
+        }
+        else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+        {
+            if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
             {
                 window.close();
             }
-            break;
-
-            case sf::Event::KeyPressed:
+        }
+        else if (const auto* mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
+        {
+            if (mouseWheelScrolled->delta > 0)
             {
-                switch(event.key.code)
-                {
-                    case sf::Keyboard::Key::Escape:
-                    {
-                        window.close();
-                    }
-                    break;
-
-                    default:
-                    break;
-                }
+                sprite.setScale(sprite.getScale() * 1.1f);
             }
-            break;
-
-            case sf::Event::MouseWheelScrolled:
+            else
             {
-                if(event.mouseWheelScroll.delta > 0)
-                {
-                    sprite.setScale(sprite.getScale() * 1.1f);
-                }
-                else
-                {
-                    sprite.setScale(sprite.getScale() / 1.1f);
-                }
+                sprite.setScale(sprite.getScale() / 1.1f);
             }
-            break;
-
-            case sf::Event::MouseButtonPressed:
+        }
+        else if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>())
+        {
+            pimpl.mouseStart = sf::Vector2f(mouseButtonPressed->position.x, mouseButtonPressed->position.y);
+            pimpl.spriteStart = sprite.getPosition();
+            pimpl.movingSprite = true;
+        }
+        else if (const auto* mouseButtonReleased = event->getIf<sf::Event::MouseButtonReleased>())
+        {
+            pimpl.movingSprite = false;
+        }
+        else if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>())
+        {
+            if(pimpl.movingSprite)
             {
-                pimpl.mouseStart = sf::Vector2f(event.mouseButton.x, event.mouseButton.y);
-                pimpl.spriteStart = sprite.getPosition();
-                pimpl.movingSprite = true;
+                auto delta = sf::Vector2f(mouseMoved->position.x, mouseMoved->position.y) - pimpl.mouseStart;
+                sprite.setPosition(pimpl.spriteStart + delta);
             }
-            break;
-
-            case sf::Event::MouseButtonReleased:
-            {
-                pimpl.movingSprite = false;
-            }
-            break;
-
-            case sf::Event::MouseMoved:
-            {
-                if(pimpl.movingSprite)
-                {
-                    auto delta = sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - pimpl.mouseStart;
-
-                    sprite.setPosition(pimpl.spriteStart + delta);
-                }
-            }
-            break;
-
-            case sf::Event::Resized:
-            {
-                window.setView(sf::View(sf::Vector2f(0, 0), sf::Vector2f(event.size.width, event.size.height)));
-            }
-            break;
-
-            default:
-            break;
+        }
+        else if (const auto* resized = event->getIf<sf::Event::Resized>())
+        {
+            window.setView(sf::View(sf::Vector2f(0, 0), sf::Vector2f(resized->size.x, resized->size.y)));
         }
     }
 

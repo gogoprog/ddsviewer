@@ -1,5 +1,5 @@
 
 /build
-!/build/premake4.lua
+!/build/premake5.lua
 /tags
 

@@ -5,7 +5,7 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/build/ddsviewer",
+            "program": "${workspaceRoot}/build/bin/Debug/ddsviewerd",
             "args": ["res/sample.dds"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
@@ -40,7 +40,7 @@
             "type": "cppdbg",
             "request": "attach",
             "program": "enter program name, for example ${workspaceRoot}/a.out",
-            "processId": "${command.pickProcess}",
+            "processId": "${command:pickProcess}",
             "linux": {
                 "MIMode": "gdb",
                 "setupCommands": [

@@ -10,14 +10,13 @@ int main(int argc, char *argv[])
 
     if(argc > 1)
     {
-        sf::RenderWindow window(sf::VideoMode(800, 600), "ddsviewer");
+        sf::RenderWindow window(sf::VideoMode({800, 600}), "ddsviewer");
 
         auto ddsFile = DdsLoader::load(argv[1]);
 
         if(ddsFile)
         {
-            sf::Sprite sprite;
-            sprite.setTexture(ddsFile->getTexture());
+            sf::Sprite sprite = sf::Sprite(ddsFile->getTexture());
             Controller controller(window, sprite);
 
             window.setTitle("ddsviewer - " + ddsFile->getFilePath());
